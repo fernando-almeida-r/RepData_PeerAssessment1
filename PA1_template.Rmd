@@ -7,11 +7,34 @@ output:
 
 
 ## Loading and preprocessing the data
+```{r load_process_data, echo = TRUE}
+# Downloading and uploading data
+temp <- tempfile()
+download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip",temp)
 
+activity <- read.csv(unzip(temp,"activity.csv"))
+unlink(temp)
+```
 
 
 ## What is mean total number of steps taken per day?
+```{r mean_steps, echo = TRUE}
 
+# Load package for group_by function
+library(dplyr)
+
+# Calculate the total number of steps taken per day, excludind NAs
+steps <- activity[!is.na(activity),] %>% group_by(date) %>% summarise(total_per_day = sum(steps))
+
+# Numbering dates from Day 1
+steps <- steps[!is.na(steps$date),] %>% mutate(Day = 1:length(date))
+
+# Load package  for  plotting system
+library(ggplot2)
+
+# Plot
+ggplot(steps, aes(y = total_per_day)) + geom_bar(x = Day)
+```
 
 
 ## What is the average daily activity pattern?
