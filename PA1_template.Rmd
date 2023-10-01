@@ -96,8 +96,8 @@ axis(2, las = 1)
 ``` {r weekend_vs_weedays,  echo = TRUE}
 df$day <- weekdays(df$date)
 df$week <- ""
-df[df$day == "Saturday" | df$day == "Sunday", ]$week <- "weekend"
-df[!(df$day == "Saturday" | df$day == "Sunday"), ]$week <- "weekday"
+df[df$day == "sábado" | df$day == "domingo", ]$week <- "weekend"
+df[!(df$day == "sábado" | df$day == "domingo"), ]$week <- "weekday"
 df$week <- factor(df$week)
 
 avg_step_df <- aggregate(steps ~ interval + week, data = df, mean)
